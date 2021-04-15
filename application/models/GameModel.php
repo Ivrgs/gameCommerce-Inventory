@@ -88,19 +88,45 @@ class GameModel extends CI_Model {
       return $this->db->affected_rows();
     }
 
-//     //CMS Titles
-    public function getCMSPlatform(){
-      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'ProductPlatform'));
+//   //CMS Titles
+    //Users
+    public function getCMSUStatus(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'user_status'));
+      return $q->result();
+    }   public function getCMSARole(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'admin_role'));
+      return $q->result();
+    }   public function getCMSAStatus(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'admin_status'));
       return $q->result();
     }
-    public function getCMSStatus(){
-        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'ProductStatus'));
+    //Products
+    public function getCMSPPlatform(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_platform'));
+      return $q->result();
+    }
+    public function getCMSPStatus(){
+        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_status'));
         return $q->result();
     }
-    public function getCMSFeatured(){
-        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'ProductFeatured'));
+    public function getCMSPFeatured(){
+        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_featured'));
         return $q->result();
     }
+    public function getCMSSCategory(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'system_category'));
+      return $q->result();
+  }
+    //Orders
+    public function getCMSOPayment(){
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'order_payment'));
+      return $q->result();
+  }
+    public function getCMSOStatus(){
+        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'order_status'));
+        return $q->result();
+    }
+  //CMS Update
     public function getCMSTypes(){     
       $q = $this->db->distinct()->select('type')->order_by("type", "asc")->get($this->table_cms);     
       return $q->result();
@@ -128,6 +154,10 @@ class GameModel extends CI_Model {
       return $this->db->affected_rows();
     }
 
+    public function selectShopCMS($copy){
+      $q = $this->db->get_where($this->table, array("product_platform" => $copy));
+      return $q->num_rows();
+    }
     public function exportData(){
       $q = $this->db->get($this->table);
       return $q->result();

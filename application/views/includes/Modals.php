@@ -14,21 +14,21 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Product Name</label>
-								<input type="text" class="form-control" name="prod_name" id="prod_name">
+								<input type="text" class="form-control" name="product_name" id="product_name">
 								<span class="help-block notif" ></span>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label class="control-label">Product Price</label>
-								<input type="text" class="form-control" name="prod_price" id="prod_price">
+								<input type="text" class="form-control" name="product_price" id="product_price">
 								<span class="help-block notif" ></span>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label class="control-label">Product Platform</label>
-								<select class="form-control" name="prod_platform" id="prod_platform"></select>
+								<select class="form-control" name="product_platform" id="product_platform"></select>
 								<span class="help-block notif" ></span>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 							<label class="control-label">Product Status</label>
-									<select class="form-control" name="prod_stat" id="prod_stat"></select>
+									<select class="form-control" name="product_status" id="product_status"></select>
 								<span class="help-block notif" ></span>
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label class="control-label">Featured</label>
-								<select class="form-control" name="prod_featured" id="prod_featured"></select>
+								<select class="form-control" name="product_featured" id="product_featured"></select>
 							</div>
 						</div>
 
@@ -59,7 +59,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label class="control-label">Product Quantity</label>
-								<input type="text" class="form-control" name="prod_quan" id="prod_quan">
+								<input type="text" class="form-control" name="product_quan" id="product_quan">
 							</div>
 						</div>
 					</div>
@@ -68,7 +68,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label class="control-label">Product Description</label>
-								<textarea class="form-control" name="prod_desc" id="prod_desc" rows="5"></textarea>
+								<textarea class="form-control" name="product_desc" id="product_desc" rows="5"></textarea>
 							</div>
 						</div>
 					</div>
@@ -134,7 +134,8 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-groupC">
-									<input type="text" class="form-control" name="addnewcms" id="addnewcms">
+									<input type="text" class="form-control" name="addCMSTitle" id="addCMSTitle">
+									<input type="text" class="form-control" name="addCMSValue" id="addCMSValue">
 								</div>
 							</div>
 					</div>
@@ -178,7 +179,9 @@
 						<div class="col-md-12">
 							<div class="form-groupCU">
 							<label></label>
+								<input type="hidden" class="form-control" name="ref" id="ref">
 								<input type="text" class="form-control" name="updateType" id="updateType">
+								<input type="text" class="form-control" name="updateVal" id="updateVal">
 								<span class="help-block notif" ></span>
 							</div>
 						</div>

@@ -79,7 +79,7 @@ class Home extends CI_Controller {
 				'email' => $this->input->post('reg_email'),
 				'password' => password_hash($this->input->post('reg_password'), PASSWORD_BCRYPT),
 				'verify_email' => password_hash(uniqid(), PASSWORD_BCRYPT),
-				'status' => 0,
+				'user_status' => 0,
 			);
 			$this->UserModel->insertUser($data);
 			redirect(base_url()."Inventory");
@@ -105,7 +105,7 @@ class Home extends CI_Controller {
 			$row[] = $game->product_quantity;
 			$row[] = $game->product_status;
 			$row[] = $game->sale_price;
-			$row[] = $game->featured;
+			$row[] = $game->product_featured;
 
 			if($game->updated_at == "" || $game->updated_at == "0000-00-00"){
 				$dateformat = "";
@@ -137,19 +137,19 @@ class Home extends CI_Controller {
 		if ($this->input->post('sale_price') == ""){
 			$sale = 1;
 		}else{
-			$sale =0;
+			$sale = 0;
 		}
 
 		$data = array(
-				'product_name' => $this->input->post('prod_name'),
-				'product_description' => $this->input->post('prod_desc'),
-				'product_platform' =>$this->input->post('prod_platform'),
-				'product_price' => $this->input->post('prod_price'),
-				'product_quantity' => $this->input->post('prod_quan'),
-				'product_status' => $this->input->post('prod_stat'),
+				'product_name' => $this->input->post('product_name'),
+				'product_description' => $this->input->post('product_desc'),
+				'product_platform' =>$this->input->post('product_platform'),
+				'product_price' => $this->input->post('product_price'),
+				'product_quantity' => $this->input->post('product_quan'),
+				'product_status' => $this->input->post('product_status'),
 				'sale_price' => $this->input->post('sale_price'),
 				'sale' => $sale,
-				'featured' => $this->input->post('prod_featured'),			
+				'product_featured' => $this->input->post('product_featured'),			
 				
 			);
 
@@ -171,14 +171,14 @@ class Home extends CI_Controller {
 		$this->_validate();
 
 		$data = array(
-			'product_name' => $this->input->post('prod_name'),
-			'product_description' => $this->input->post('prod_desc'),
-			'product_platform' =>$this->input->post('prod_platform'),
-			'product_price' => $this->input->post('prod_price'),
-			'product_quantity' => $this->input->post('prod_quan'),
-			'product_status' => $this->input->post('prod_stat'),
+			'product_name' => $this->input->post('product_name'),
+			'product_description' => $this->input->post('product_description'),
+			'product_platform' =>$this->input->post('product_platform'),
+			'product_price' => $this->input->post('product_price'),
+			'product_quantity' => $this->input->post('product_quantity'),
+			'product_status' => $this->input->post('product_status'),
 			'sale_price' => $this->input->post('sale_price'),
-			'featured' => $this->input->post('prod_featured'),	
+			'product_featured' => $this->input->post('product_featured'),	
 			);
 
 		$this->home->updateGame(array('id' => $this->input->post('id')), $data);
@@ -206,9 +206,15 @@ class Home extends CI_Controller {
 	//CMS
 	public function getDropdown(){
 		$data = array(
-			'getplatform' => $this->home->getCMSPlatform(),
-			'getfeatured' =>$this->GameModel->getCMSFeatured(),
-			'getstatus' =>$this->GameModel->getCMSStatus(),
+			'getustatus' => $this->home->getCMSUStatus(),
+			'getarole' => $this->home->getCMSARole(),
+			'getastatus' => $this->home->getCMSAStatus(),
+			'getpplatform' => $this->home->getCMSPPlatform(),
+			'getpstatus' =>$this->GameModel->getCMSPStatus(),
+			'getpfeatured' =>$this->GameModel->getCMSPFeatured(),
+			'getscategory' =>$this->GameModel->getCMSSCategory(),
+			'getopayment' =>$this->GameModel->getCMSOPayment(),
+			'getostatus' =>$this->GameModel->getCMSOStatus(),
 			'gettypes' =>$this->GameModel->getCMSTypes(),
 			
 		);
@@ -223,7 +229,8 @@ class Home extends CI_Controller {
 		//$this->_validate();
 		$data = array(
 			'type' => $this->input->post('gtype'),
-			'title' => $this->input->post('addnewcms'),
+			'title' => $this->input->post('addCMSTitle'),
+			'value' => $this->input->post('addCMSValue'),
 		);
 	
 		$this->home->addCMS($data);
@@ -233,21 +240,24 @@ class Home extends CI_Controller {
 	public function UpdateCMS(){
 		$data = array(
 		 	'title' => $this->input->post('updateType'),
-			'type' => $this->input->post('gtypeUpdate'),			 
+			'value' => $this->input->post('updateVal')			 
 		);
 		
-		$this->home->updateCMS(array('title' => $this->input->post('selectType')), $data);
-		$this->CMSUpdateTable();
-	}
-	public function CMSUpdateTable(){
-		$loc = strtolower($this->input->post('gtypeUpdate'));
-		$new =  array(
-			$loc => $this->input->post('updateType'),
-		);
+		$this->home->updateCMS(array('title' => $this->input->post('ref')), $data);
+		$asd = $this->home->selectShopCMS($this->input->post('ref'));
 
-		$this->home->updateTableCMS(array($loc => $this->input->post('selectType')), $new);
-		echo json_encode(array("status" => TRUE));
-		
+		if($asd == 0){
+			echo json_encode(array("status" => TRUE));
+		}else{
+			$loc = strtolower($this->input->post('gtypeUpdate'));
+			$new =  array(
+				$loc => $this->input->post('updateType'),
+				'value' => $this->input->post('updateVal')	
+			);
+
+			$this->home->updateTableCMS(array($loc => $this->input->post('updateType')), $new);
+			echo json_encode(array("status" => TRUE));
+		}
 	}
 
 	public function DeleteCMS(){
@@ -342,8 +352,8 @@ class Home extends CI_Controller {
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
 
-		if($this->input->post('prod_name') == ''){
-			$data['inputerror'][] = 'prod_name';
+		if($this->input->post('product_name') == ''){
+			$data['inputerror'][] = 'product_name';
 			$data['error_string'][] = 'Product Name is required';
 			$data['status'] = FALSE;
 		}
