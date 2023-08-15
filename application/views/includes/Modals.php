@@ -135,7 +135,6 @@
 							<div class="col-md-6">
 								<div class="form-groupC">
 									<input type="text" class="form-control" name="addCMSTitle" id="addCMSTitle">
-									<input type="text" class="form-control" name="addCMSValue" id="addCMSValue">
 								</div>
 							</div>
 					</div>
@@ -179,9 +178,8 @@
 						<div class="col-md-12">
 							<div class="form-groupCU">
 							<label></label>
-								<input type="hidden" class="form-control" name="ref" id="ref">
+								<input type="hidden" class="form-control" name="cmsID" id="cmsID" value="">
 								<input type="text" class="form-control" name="updateType" id="updateType">
-								<input type="text" class="form-control" name="updateVal" id="updateVal">
 								<span class="help-block notif" ></span>
 							</div>
 						</div>

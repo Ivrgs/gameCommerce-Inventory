@@ -110,13 +110,13 @@ function edit_game(id){
         success: function(data){
             $('[name="id"]').val(data.id);
             $('[name="product_name"]').val(data.product_name);
-			$('[name="product_description"]').val(data.product_description);
+			$('[name="product_desc"]').val(data.product_description);
             $('[name="product_platform"]').val(data.product_platform);
             $('[name="product_price"]').val(data.product_price);
-            $('[name="product_quantity"]').val(data.product_quantity);
+            $('[name="product_quan"]').val(data.product_quantity);
             $('[name="product_status"]').val(data.product_status);
             $('[name="sale_price"]').val(data.sale_price);
-            $('[name="product_featured"]').val(data.featured);
+            $('[name="product_featured"]').val(data.product_featured);
             $('#modal_form').modal('show');
             $('.modal-title').text('Edit Details');
        
@@ -289,7 +289,7 @@ function cms_edit(){
         $('#updateType').focus();
     });
    
-            
+    
     $('[name="gtypeUpdate"]').val("#gtypeUpdate option:selected");
     $('[name="selectType"]').val("#selectType option:selected");
     $('[name="updateType"]').val();
@@ -307,7 +307,9 @@ function FindType(){
         success: function(response) { 
             $("#selectType").empty(); 
             for (var a = 0; a < response.length; a++){  
-                var opt = new Option(response[a].title, response[a].value);  
+                var cmdid = new Option(response[a].id);
+                var opt = new Option(response[a].title);  
+                $("#cmsID").val(cmdid);
                 $("#selectType").append(opt);  
                 
             }
@@ -384,41 +386,41 @@ $(document).ready(function() {
         dataType: "JSON",
         success: function(response) { 
             for (var i = 0; i < response['getustatus'].length; i++) { 
-                var opt = new Option(response['getustatus'][i].title, response['getustatus'][i].value); 
+                var opt = new Option(response['getustatus'][i].title, response['getustatus'][i].title); 
                  $("#user_stat").append(opt);
             }
             for (var i = 0; i < response['getarole'].length; i++) { 
-                var opt = new Option(response['getarole'][i].title, response['getarole'][i].value); 
+                var opt = new Option(response['getarole'][i].title, response['getarole'][i].title); 
                  $("#admin_role").append(opt); 
             }
             for (var i = 0; i < response['getastatus'].length; i++) { 
-                var opt = new Option(response['getastatus'][i].title, response['getastatus'][i].value); 
+                var opt = new Option(response['getastatus'][i].title, response['getastatus'][i].title); 
                  $("#admin_status").append(opt); 
             }
 
             for (var i = 0; i < response['getpplatform'].length; i++) { 
-                var opt = new Option(response['getpplatform'][i].title, response['getpplatform'][i].value); 
+                var opt = new Option(response['getpplatform'][i].title, response['getpplatform'][i].title); 
                 $("#product_platform").append(opt); 
             }
             for (var i = 0; i < response['getpstatus'].length; i++) { 
-                var opt = new Option(response['getpstatus'][i].title, response['getpstatus'][i].value); 
+                var opt = new Option(response['getpstatus'][i].title, response['getpstatus'][i].title); 
                 $("#product_status").append(opt);  
             }
             for (var i = 0; i < response['getpfeatured'].length; i++) { 
-                var opt = new Option(response['getpfeatured'][i].title, response['getpfeatured'][i].value); 
+                var opt = new Option(response['getpfeatured'][i].title, response['getpfeatured'][i].title); 
                 $("#product_featured").append(opt);  
             }
             for (var i = 0; i < response['getscategory'].length; i++) { 
-                var opt = new Option(response['getscategory'][i].title, response['getscategory'][i].value); 
+                var opt = new Option(response['getscategory'][i].title, response['getscategory'][i].title); 
                 $("#system_category").append(opt);  
             }
 
             for (var i = 0; i < response['getopayment'].length; i++) { 
-                var opt = new Option(response['getopayment'][i].title, response['getopayment'][i].value); 
+                var opt = new Option(response['getopayment'][i].title, response['getopayment'][i].title); 
                 $("#order_payment").append(opt); 
             }
             for (var i = 0; i < response['getostatus'].length; i++) { 
-                var opt = new Option(response['getostatus'][i].title, response['getostatus'][i].value); 
+                var opt = new Option(response['getostatus'][i].title, response['getostatus'][i].title); 
                  $("#order_status").append(opt); 
             }
 

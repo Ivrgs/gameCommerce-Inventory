@@ -135,20 +135,21 @@ class Home extends CI_Controller {
 
 		$sale;
 		if ($this->input->post('sale_price') == ""){
-			$sale = 1;
+			$sale = "No";
 		}else{
-			$sale = 0;
+			$sale = "Yes";
 		}
 
 		$data = array(
 				'product_name' => $this->input->post('product_name'),
+				'product_slug' => strtolower(str_replace(' ','-',$this->input->post('product_name'))),
 				'product_description' => $this->input->post('product_desc'),
 				'product_platform' =>$this->input->post('product_platform'),
 				'product_price' => $this->input->post('product_price'),
 				'product_quantity' => $this->input->post('product_quan'),
 				'product_status' => $this->input->post('product_status'),
 				'sale_price' => $this->input->post('sale_price'),
-				'sale' => $sale,
+				'product_sale' => $sale,
 				'product_featured' => $this->input->post('product_featured'),			
 				
 			);
@@ -172,10 +173,11 @@ class Home extends CI_Controller {
 
 		$data = array(
 			'product_name' => $this->input->post('product_name'),
-			'product_description' => $this->input->post('product_description'),
+			'product_slug' => strtolower(str_replace(' ','-',$this->input->post('product_name'))),
+			'product_description' => $this->input->post('product_desc'),
 			'product_platform' =>$this->input->post('product_platform'),
 			'product_price' => $this->input->post('product_price'),
-			'product_quantity' => $this->input->post('product_quantity'),
+			'product_quantity' => $this->input->post('product_quan'),
 			'product_status' => $this->input->post('product_status'),
 			'sale_price' => $this->input->post('sale_price'),
 			'product_featured' => $this->input->post('product_featured'),	
@@ -229,8 +231,7 @@ class Home extends CI_Controller {
 		//$this->_validate();
 		$data = array(
 			'type' => $this->input->post('gtype'),
-			'title' => $this->input->post('addCMSTitle'),
-			'value' => $this->input->post('addCMSValue'),
+			'title' => $this->input->post('addCMSTitle')
 		);
 	
 		$this->home->addCMS($data);
@@ -239,20 +240,18 @@ class Home extends CI_Controller {
 
 	public function UpdateCMS(){
 		$data = array(
-		 	'title' => $this->input->post('updateType'),
-			'value' => $this->input->post('updateVal')			 
+		 	'title' => $this->input->post('updateType'),		 
 		);
 		
-		$this->home->updateCMS(array('title' => $this->input->post('ref')), $data);
-		$asd = $this->home->selectShopCMS($this->input->post('ref'));
+		$this->home->updateCMS(array('id' => $this->input->post('cmsID')), $data);
+		$asd = $this->home->selectShopCMS($this->input->post('cmsID'));
 
 		if($asd == 0){
 			echo json_encode(array("status" => TRUE));
 		}else{
 			$loc = strtolower($this->input->post('gtypeUpdate'));
 			$new =  array(
-				$loc => $this->input->post('updateType'),
-				'value' => $this->input->post('updateVal')	
+				$loc => $this->input->post('updateType')
 			);
 
 			$this->home->updateTableCMS(array($loc => $this->input->post('updateType')), $new);

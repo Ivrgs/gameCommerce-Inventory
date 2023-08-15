@@ -102,15 +102,15 @@ class GameModel extends CI_Model {
     }
     //Products
     public function getCMSPPlatform(){
-      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_platform'));
+      $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'Product Platform'));
       return $q->result();
     }
     public function getCMSPStatus(){
-        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_status'));
+        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'Product Status'));
         return $q->result();
     }
     public function getCMSPFeatured(){
-        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'product_featured'));
+        $q = $this->db->order_by("title", "asc")->get_where($this->table_cms, array('type' => 'Featured'));
         return $q->result();
     }
     public function getCMSSCategory(){
